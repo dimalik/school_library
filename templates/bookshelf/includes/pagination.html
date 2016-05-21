@@ -1,0 +1,25 @@
+{% if paginator.page_range|length > 1 %}
+<div class="pagination pagination-centered">
+  <ul>
+    {% if page_obj.has_previous %}
+    <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+    <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+
+    {% for selida in paginator.page_range %}
+    {% if selida == page_obj.number %}
+    <li class="active"><span>{{ selida }}</span></li>
+    {% else %}
+    <li><a href="?page={{ selida }}">{{ selida }}</a></li>
+    {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+    <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+    {% else %}
+    <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+</div>
+{% endif %}

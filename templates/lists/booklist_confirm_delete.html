@@ -1,0 +1,15 @@
+{% extends "base_lists.html" %}
+
+
+{% block listcontent %}
+<div class="app-content-panel-title">Διαγραφή λίστας</div>
+<div class="app-content-panel-content">
+	<form action="" method="post">{% csrf_token %}
+	    <div class="alert alert-danger"><p>Θέλετε οπωσδήποτε να διαγράψετε τη λίστα "{{ object.title }}";</p></div>
+		<button type="button submit" class="btn btn-danger">Διαγραφή</button>
+		<a href="{% url 'lists_view_list' slug=object.slug %}" class="btn btn-primary">Όχι δεν επιθυμώ διαγραφή της λίστας μου</a>
+	</form>
+</div>
+{% endblock listcontent %}
+
+

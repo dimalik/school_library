@@ -1,0 +1,43 @@
+{% extends "base_bookshelf.html" %}
+
+{% block extrahead %}
+<script type="text/javascript">
+    $(document).ready(function() {
+    //collapsible management
+        $('.collapsible').collapsible({
+            defaultOpen: 'actions'
+        });
+    });
+</script>
+
+
+<script type="text/javascript">
+	var params = {
+		'book_id': {{ vivlio.id }},
+		'res_url': "{% url "reservations_create_reservation" %}",
+		'csrf_token' : "{{ csrf_token }}",
+		'starHalf' : '{{ STATIC_URL }}img/star-half.png',
+		'starOn' : '{{ STATIC_URL }}img/star-on.png',
+		'starOff' : '{{ STATIC_URL }}img/star-off.png',
+		'bookScore' : {{ vivlio.rating.get_rating|stringformat:'f' }},
+		'rate_url' : "{% url "bookshelf_book_rate_view" %}",
+		'list_url' : "{% url "lists_add_book" %}"
+		};
+</script>
+<style type="text/css" media="screen">
+.fa {
+  font-family: FontAwesome !important;
+}
+</style>
+
+
+{% endblock %}
+
+{% block bookshelfcontent %}
+	{% include "content/item_present.html" %}
+	{% include "includes/comments.html" %}
+{% endblock bookshelfcontent %}
+
+{% block bookshelfactions %}
+	{% include "sidebar/sidebar_actions.html" %}
+{% endblock bookshelfactions %}

@@ -1,0 +1,237 @@
+<div class="row">
+  <div class="col-lg-12">
+    {% include "includes/alerts.html" %}
+	<div class="col-lg-12">
+		<h4 class="detail-title">{{ vivlio.title }} {% if vivlio.subtitle %}:<em> {{ vivlio.subtitle }}</em>{% endif %}{% if vivlio.edition %} ({{ vivlio.edition }}η έκδοση){% endif %} / {% if vivlio.editor.all|length > 0 %}<em>Επιμ.: {{ vivlio.get_editors }}{% else %}<em>{{ vivlio.get_book_authors }} </em>{% endif %}</em><div id="star"><input type="hidden" name="csrfmiddlewaretoken" value="{% with csrf_token as csrf_token_clean %}{{ csrf_token_clean }}{% endwith %}" /></div>
+</h4>
+		<div class="tabbable">
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#leptomereies" data-toggle="tab">Λεπτομέρειες</a></li>
+				<li><a href="#stoixeia" data-toggle="tab">Ταξιθετικά Στοιχεία</a></li>
+				{% if vivlio.volume or vivlio.notes or vivlio.issue or vivlio.series or vivlio.num_pages or not vivlio.translator.all|length == 0 %}
+				<li><a href="#diafora" data-toggle="tab">Λοιπά Στοιχεία</a></li>
+				{% endif %}
+				{% if ergasies %}
+				<li><a href="#ergasies" data-toggle="tab">Εργασίες Μαθητών</a></li>
+				{% endif %}
+			</ul>
+      <div class="tab-content">
+				<div class="tab-pane active" id="leptomereies">
+					<table class="table table-hover">
+						<tbody>
+							{% if vivlio.author.all|length > 0 %}
+							<tr>
+								<td>
+									{% if vivlio.author.all|length > 1 %}Συγγραφείς:{% else %}Συγγραφέας:{% endif %}
+								</td>
+								<td>
+									<ul style="list-style: none; margin:0px; padding:0px;">
+										{% for syggrafeas in vivlio.author.all %}
+										<li><a href="{{ syggrafeas.get_absolute_url }}">{{ syggrafeas.name }}</a></li>
+										{% endfor %}
+									</ul>
+								</td>
+							</tr>
+							{% endif %}
+							{% if vivlio.editor.all|length > 0 %}
+							<tr>
+								<td>
+									{% if vivlio.editor.all|length > 1 %}Επιμελητές έκδοσης:{% else %}Επιμελητής έκδοσης:{% endif %}
+								</td>
+								<td>
+									<ul style="list-style: none; margin:0px; padding:0px;">
+										{% for epimelitis in vivlio.editor.all %}
+										<li><a href="{{ epimelitis.get_absolute_url }}">{{ epimelitis.name }}</a></li>
+										{% endfor %}
+									</ul>
+								</td>
+							</tr>
+							{% endif %}
+							{% if vivlio.publisher.name %}
+							<tr>
+								<td>
+									Έκδοση:
+								</td>
+								<td>
+									{% if vivlio.publisher.address %}
+									{{ vivlio.publisher.address }}: 
+									{% endif %}
+									<a href="{{ vivlio.publisher.get_absolute_url }}">{{ vivlio.publisher }}</a>{% if vivlio.publisher.name and vivlio.year %},{% endif %}{% if vivlio.year %} {{ vivlio.year }}{% endif %}
+								</td>
+							</tr>
+							{% endif %}
+							<tr>
+								<td>
+									Κατηγορία:
+								</td>
+								<td>
+									<a href="{{ vivlio.category.get_absolute_url }}">{{ vivlio.category }}</a>
+								</td>
+							</tr>
+              {% if vivlio.language %}
+							<tr>
+								<td>
+									Γλώσσα:
+								</td>
+								<td>
+									{{ vivlio.get_language_display }}
+								</td>
+							</tr>
+              {% endif %}
+						</tbody>
+					</table>
+				</div>
+				
+				<div class="tab-pane" id="stoixeia">
+					<table class="table table-hover">
+						<tbody>
+							<tr>
+								<td>
+									Ταξιθετικός αριθμός
+								</td>
+								<td>
+									{{ vivlio.bib_code }}
+								</td>
+							</tr>
+							<tr>
+								<td>
+									Αριθμός Εισαγωγής
+								</td>
+								<td>
+									{{ vivlio.cr_code }}
+								</td>
+							</tr>
+	      			<tr>
+								<td>
+									Αριθμός Αντιτύπων
+								</td>
+								<td>
+									{{ vivlio.num_copies }}
+								</td>
+							</tr>
+	      			<tr>
+								<td>
+									Διαθεσιμότητα
+								</td>
+								<td>
+									{% if vivlio.status %}
+									<i class="fa fa-check"></i>
+									{% else %}
+									<i class="fa fa-ban"></i>
+									{% endif %}
+								</td>
+							</tr>
+							<tr>
+								<td>
+									Αριθμός Διαθέσιμων Βιβλίων
+								</td>
+								<td>
+									{{ vivlio.num_available_copies }}
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="tab-pane" id="diafora">
+					<table class="table table-hover">
+						<tbody>
+							{% if vivlio.volume %}
+							<tr>
+								<td>
+									Τόμος
+								</td>
+								<td>
+									{{ vivlio.volume }}
+								</td>
+							</tr>
+							{% endif %}
+							{% if vivlio.issue %}
+							<tr>
+								<td>
+									Τεύχος
+								</td>
+								<td>
+									{{ vivlio.issue }}
+								</td>
+							</tr>
+							{% endif %}
+							{% if vivlio.translator.all|length > 0 %}
+							<tr>
+								<td>
+									Μεταφραστής
+								</td>
+								<td>
+									<ul style="list-style: none; margin: 0;">
+										{% for metafrastis in vivlio.translator.all %}
+										<li><a href="{{ metafrastis.get_absolute_url }}">{{ metafrastis.name }}</a></li>
+										{% endfor %}
+									</ul>
+								</td>
+							</tr>
+							{% endif %}
+							{% if vivlio.series %}
+							<tr>
+								<td>
+									Σειρά
+								</td>
+								<td>
+									{{ vivlio.series }}
+									{% if vivlio.ser_num %}
+									 - {{ vivlio.ser_num }}
+									{% endif %}
+								</td>
+							</tr>
+							{% endif %}
+							{% if vivlio.num_pages %}
+							<tr>
+								<td>
+									Αριθμός Σελίδων
+								</td>
+								<td>
+									{{ vivlio.num_pages }}
+								</td>
+							</tr>
+							{% endif %}
+							{% if vivlio.notes %}
+							<tr>
+								<td>
+									Σημειώσεις
+								</td>
+								<td>
+									<p>{{ vivlio.notes|safe }}</p>
+								</td>
+							</tr>
+							{% endif %}
+						</tbody>
+					</table>
+				</div>
+				<div class="tab-pane" id="ergasies">
+					<table class="table table-hover">
+						<tbody>
+							{% for ergasia in ergasies %}
+							<tr>
+                <td>
+                  {{ ergasia.get_participants }}
+                </td>
+								<td>
+									{{ ergasia.title }}
+								</td>
+							</tr>
+              {% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+		{% if vivlio.foto %}
+		<div class="wraptocenter"><span></span>
+			<img src="{{ MEDIA_URL}}{{ vivlio.foto }}" alt="{{ vivlio.title }}" class="img-thumbnail"/>
+		</div>
+		{% endif %}
+
+
+	</div>
+
+</div>

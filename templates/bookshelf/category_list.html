@@ -1,0 +1,25 @@
+{% extends "base_bookshelf.html" %}
+
+{% block bookshelfcontent %}
+
+{% endblock bookshelfcontent %}
+
+{% block bookshelfactions %}
+<div id="bookshelf-base-browse-sidebar" class="app-action-panel">
+	<div class="app-action-panel-title">Επιλέξτε κατηγορία</div>
+	<div class="app-action-panel-content">
+    <ul class="categories">
+      <li><a href="{% url "bookshelf_category_filter_view" "100" %}">φιλοσοφία - ψυχολογία - λογική - ηθική </a></li>
+      <li><a href="{% url "bookshelf_category_filter_view" "200" %}">θρησκεία</a></li>
+      <li><a href="{% url "bookshelf_category_filter_view" "300" %}">κοινωνικές επιστήμες</a></li>
+      <li><a href="{% url "bookshelf_category_filter_view" "400" %}">γλώσσα - λεξικά </a></li>
+      <li><a href="{% url "bookshelf_category_filter_view" "600" %}">εφαρμοσμένες επιστήμες</a></li>
+      <li><a href="{% url "bookshelf_category_filter_view" "700" %}">τέχνη</a></li>
+      <li><a href="{% url "bookshelf_category_filter_view" "800" %}">λογοτεχνία</a></li>
+      <li><a href="{% url "bookshelf_category_filter_view" "900" %}">γεωγραφία - ιστορία</a></li>
+    </ul>
+	</div>
+</div>
+
+
+{% endblock %}

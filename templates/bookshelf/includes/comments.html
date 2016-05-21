@@ -1,0 +1,14 @@
+{% if sxolia %}
+<hr />
+<div class="row">
+<div class="col-lg-8 offset2">
+  <table class="table table-striped table-condensed">
+    <caption><h4>Για το βιβλίο αυτό οι μαθητές έγραψαν</h4></caption>
+    {% for sxolio in sxolia %}
+    <tr><td><p>{{ sxolio.text }}</p><b>{{ sxolio.author }} - <em>{{ sxolio.created }}</em></b></td></tr>
+    {% endfor %}
+  </table>
+</div>
+</div>
+{% endif %}
+    

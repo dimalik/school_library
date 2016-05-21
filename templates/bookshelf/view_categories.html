@@ -1,0 +1,48 @@
+{% extends "category_list.html" %}
+{% block extrahead %}
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function() {
+  $('tr').click( function() {
+      window.location = $(this).find('a').attr('href');
+  }).hover( function() {
+      $(this).toggleClass('hover');
+  });
+});
+
+
+</script>
+<style type="text/css" media="screen">
+tr.hover {
+   cursor: pointer;
+   /* whatever other hover styles you want */
+}
+</style>
+{% endblock extrahead %}
+{% block bookshelfcontent %}
+<div>
+  <table class="table table-hover">
+    {% for item in items %}
+      <tr>
+        <td>
+  					<h5 class="bookshelf-base-index-book-title"><a href="{{ item.get_absolute_url }}">{{ item }}</a><br /><em>Κωδικός κατηγορίας: <span class="bookshelf-base-index-book-authors">{{ item.code }}</em><span class="bookshelf-base-index-book-authors"><br /><em>Αριθμός βιβλίων στη βάση μας: {{ item.get_books_count }}</em></h5>
+              </td>
+  				</tr>
+     
+    {% endfor %}
+  </table>
+</div>
+{% endblock bookshelfcontent %}
+
+        <div>
+          {% if item.title %}
+          <div>
+            <a href="{{ item.get_absolute_url }}"><b>{{ item.title}}</b></a>
+          </div>
+          {% endif %}
+          <div>
+            Κωδικός: {{ item.code }}
+          </div>
+          <div>
+            <em>Αριθμός βιβλίων στη συγκεκριμένη κατηγορία: {{ item.get_books_count }}</em>
+          </div>
+        </div>

@@ -1,0 +1,42 @@
+{% extends "base_bookshelf.html" %}
+
+
+
+{% block bookshelfcontent %}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="app-content-panel-title">προτεινόμενοι τίτλοι</div>	
+		<div class="app-content-panel-content">
+			{% for book in books_to_present %}
+			<div class="bookshelf-base-index-book">
+				<div id="bookshelf-base-index-book-{{ book.slug }}" class="col-lg-3" style="min-height:200px;">
+					{% if book.foto %}<img src="{{ MEDIA_URL }}{{ book.foto }}" class="img-thumbnail" style=""/>{% endif %}
+					<h5 class="bookshelf-base-index-book-title"><a href="{{ book.get_absolute_url }}">{{ book.title }}</a>{% if book.subtitle %}:<em> {{ book.subtitle }}</em>{% endif %} {% if book.editor.all|length > 0 %}<br /><em>Επιμ.: <span class="bookshelf-base-index-book-authors">{{ book.get_editors }}</em>{% else %}<span class="bookshelf-base-index-book-authors"><br /><em>{{ book.get_book_authors }}</em> {% endif %}</em></h5>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+
+{% endblock bookshelfcontent %}
+
+{% block bookshelfactions %}
+<div id="bookshelf-base-browse-sidebar" class="app-action-panel">
+	<div class="app-action-panel-title">περιήγηση με βάση</div>
+	<div class="app-action-panel-content">
+		<ul>
+			<li><a href="{% url "bookshelf_alphabetically_view" %}">Αλφαβητικά</a></li>
+      <li><a href="{% url "bookshelf_publisher_view" %}">Ανά εκδότη</a></li>
+      <li><a href="{% url "bookshelf_year_view" %}">Ανά έτος</a></li>
+			<li><a href="{% url "bookshelf_categorylist_view" %}">Ανά κατηγορία</a></li>
+			<li><a href="{% url "bookshelf_authorlist_view" %}">Ανά συγγραφέα</a></li>
+		</ul>
+	</div>
+</div>
+
+
+
+{% endblock bookshelfactions %}
+
+{% block footer %}{% endblock footer %}

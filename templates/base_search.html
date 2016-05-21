@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+{% endblock extrahead %}
+
+{% block mainbody %}
+<div id="search-base-main">
+<div class="row">
+	<div class="col-lg-12">
+		<div class="col-lg-8">
+			{% block search_content %}
+			{% endblock search_content %}
+		</div>
+		<div class="col-lg-4">
+			{% block search_actions %}
+			{% endblock search_actions %}
+		</div
+	</div>
+</div>
+{% endblock mainbody %}

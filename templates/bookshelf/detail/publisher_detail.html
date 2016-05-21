@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row" style="margin-top: 10px;">
+        <div class="span8">
+            <h4>{{ ekdoths.name }}</h4>
+            <table class="table">
+                <tbody>
+                <tr>
+                    {% if ekdoths.address %}
+                        <td>Διεύθυνση:</td>
+                        <td>{{ ekdoths.address }}</td>{% endif %}
+                </tr>
+                <tr>
+                    {% if ekdoths.description %}
+                        <td>Λοιπά στοιχεία:</td>
+                        <td><p style="text-align: justify;">{{ ekdoths.description }}</p></td>{% endif %}
+                </tr>
+                </tbody>
+
+
+            </table>
+        </div>
+
+        <div class="span4">
+            {% if ekdoths.fotografia %}
+                <div class="thumbnail">
+                <img src="{{ MEDIA_URL }}{{ ekdoths.fotografia }}" alt="{{ ekdoths.name }}" title="{{ ekdoths.name }}"/>
+                </div>{% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="span12">
+            <table class="table table-hover">
+
+                <thead>
+                <tr>
+                    <th>Βιβλιάριθμος</th>
+                    <th>Τίτλος βιβλίου</th>
+                    <th>Συγγραφέας</th>
+                    <th>Έτος</th>
+                    <th>Κατηγορία</th>
+                    <th>Διαθεσιμότητα</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for vivlio in book_list %}
+                    <tr>
+                        <td>{{ vivlio.bib_code }}</td>
+                        <td><a href="{{ vivlio.get_absolute_url }}">{{ vivlio.title }}</a></td>
+                        <td>
+                            <ul style="list-style: none;">{% for syggrafeas in vivlio.author.all %}
+                                <li><a href="{{ syggrafeas.get_absolute_url }}"> {{ syggrafeas.name }} </a>
+                                </li>{% endfor %}</ul>
+                        </td>
+                        <td>{% if vivlio.year %}{{ vivlio.year }}{% endif %}</td>
+                        <td><a href="{{ vivlio.category.get_absolute_url }}">{{ vivlio.category }}</a></td>
+                        <td>{% if vivlio.status %}Διαθέσιμο{% else %}Μη διαθέσιμο{% endif %}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

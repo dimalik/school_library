@@ -1,0 +1,10 @@
+<div id="library-index-assignments-panel" class="library-index-panel">
+	<h4 class="library-index-panel-title">εργασίες</h4>
+	<div class="library-index-panel-content">
+		<ul>
+		    {% for assignment in assignments %}
+	          <li><a href="{{ assignment.get_absolute_url }}">{{ assignment.title|truncatewords_html:5 }}<div class="pull-right"><em>{{ assignment.book }}</em></div></a></li>
+	        {% endfor %}
+		</ul>
+	</div>
+</div>

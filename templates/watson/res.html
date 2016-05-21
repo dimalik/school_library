@@ -1,0 +1,140 @@
+{% extends "base_bookshelf.html" %}
+
+{% load watson %}
+{% load append %}
+{% load facet_tags %}
+
+{% block extrahead %}
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+    $('.active-facet-name').each(function() {
+      if ($(this).text() == 'Category ') {
+        $(this).text('Κατηγορία ')
+      }
+      else if ($(this).text() == 'Publisher ') {
+        $(this).text('Εκδότης ')
+      }
+      else if ($(this).text() == 'Status ') {
+        $(this).text('Διαθεσιμότητα ')
+      }
+      else if ($(this).text() == 'Location ') {
+        $(this).text('Τοποθεσία ')
+      }
+    });
+    $('.active-facet-value').each(function() {
+      if ($(this).text() == 'true') {
+        $(this).text('Υπάρχει')
+      }
+      else if ($(this).text() == 'false') {
+        $(this).text('Δεν υπάρχει')
+      }
+    });
+  });
+  
+</script>
+<style type="text/css" media="screen">
+.pagination-part {
+  text-align: center;
+}
+.pagination-part ul {
+  display: inline-block;
+}
+
+.pagination a {
+  color: black;
+}
+.nav-header {
+  background-color: #CC1440;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+#reset-filters {
+  padding-left: 20px;
+}
+.fa {
+  font-family: FontAwesome !important;
+}
+#reset-filters .facet_removal:hover {
+  text-decoration: underline;  
+}
+</style>
+{% endblock extrahead %}
+
+
+
+{% block bookshelfcontent %}
+
+{# <div class="results-found"> #}
+{#     <p class="muted">{% if page.paginator.count > 1 %}Βρέθηκαν {{ page.paginator.count }} αποτελέσματα {% elif page.paginator.count == 1 %}Βρέθηκε {{ page.paginator.count }} αποτέλεσμα{% else %}Δεν βρέθηκε κανένα βιβλίο με τα στοιχεία που δώσατε{% endif %}</p> #}
+{# </div> #}
+{# {% if page.paginator.count != 0 %} #}
+<div id="alla-vivlia" class="row">
+  <div class="col-lg-12">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th class="book-code-head">Βιβλιάριθμος</th>
+            <th class="book-title-head">Τίτλος βιβλίου</th>
+            <th class="book-author-head">Συγγραφέας</th>
+            <th class="book-publisher-head">Εκδότης</th>
+            <th class="book-year-head">Έτος</th>
+            <th class="book-category-head">Κατηγορία</th>
+            <th class="book-status-head">Διαθεσιμότητα</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for vivlio in items %}
+          <tr>
+            <td class="book-code">{{ vivlio.bib_code }}</td>
+            <td class="book-title"><a href="{{ vivlio.get_absolute_url }}">{{ vivlio.title }}</a></td>
+            <td class="book-author"><ul class="authors-list"  style="list-style: none; margin:0px; padding:0px;line-height:20px">{% for syggrafeas in vivlio.author.all %}<li><a href="{{ syggrafeas.get_absolute_url }}"> {{ syggrafeas.name }} </a></li>{% endfor %}</ul></td>
+            <td class="book-publisher"><a href="{{ vivlio.publisher.get_absolute_url }}"> {{ vivlio.publisher.name }} </a></td>
+            <td class="book-year">{% if vivlio.year %}{{ vivlio.year }}{% endif %}</td>
+            <td class="book-category"><a href="{{ vivlio.category.get_absolute_url }}">{% if vivlio.category.title %}{{ vivlio.category.title }}{% else %}{{ vivlio.category.code }}{% endif %}</a></td>
+            <td class="book-status">{% if vivlio.status %}Διαθέσιμο{% else %}Μη διαθέσιμο{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+  </div>
+</div>
+{# {% endif %} #}
+ 
+{% if items.paginator.num_pages > 1 %}
+<div class="pagination-part">
+<ul class="pagination">
+  {% if items.has_previous %}
+        <li><a href="?page={{ items.previous_page_number }}">&laquo;</a></li>
+  {% else %}
+  <li class="disabled"><a href="#">&laquo;</a></li>
+  {% endif %}
+  {% for num in numpages %}
+  {% if num == items.number %}
+  <li class="active"><a href="#">{{ num }}</a></li>
+  {% else %}
+  <li><a href="{% append_to_get page=num %}">{{ num }}</a></li>
+  {% endif %}
+  
+  {% endfor %}
+  {% if items.has_next %}
+      <li><a href="?page={{ items.next_page_number }}">&raquo;</a></li>
+  {% else %}
+  <li class="disabled"><a href="#">&raquo;</a></li>
+  {% endif %}
+</ul>
+</div>
+{% endif %}
+
+{% endblock %}
+
+
+
+
+
+
+
+{% block bookshelfactions %}
+
+       
+{% endblock bookshelfactions %}

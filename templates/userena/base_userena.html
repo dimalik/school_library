@@ -1,0 +1,36 @@
+{% extends "base_bookshelf.html" %}
+
+{% block extrahead %}
+<style type="text/css" media="screen">
+table {
+  color:black;
+}
+</style>
+{% endblock %}
+
+{% block bookshelfcontent %}
+
+		{% block userena_content %}
+		{% endblock userena_content %}
+
+    {% endblock bookshelfcontent %}
+    
+    
+		{% block bookshelfactions %}
+    {% if user.is_authenticated %}
+    <div id="bookshelf-base-browse-sidebar" class="app-action-panel">
+    	<div class="app-action-panel-title">Επιλέξτε κατηγορία</div>
+    	<div class="app-action-panel-content">
+        <ul class="actions">
+
+     		<ul style="list-style: none;padding-left: 0px;/* border-left: 1px dotted black; */line-height: 35px;">
+     			<li><a href="{% url 'userena_profile_detail' user.username %}">Δείτε το προφίλ σας</a></li>
+     	        <li><a href="{% url 'userena_profile_edit' user.username %}">Επεξεργασία των πληροφοριών σας</a></li>
+     	        <li><a href="{% url 'userena_password_change' user.username %}">Αλλαγή συνθηματικού</a></li>
+     	        <li><a href="{% url 'userena_email_change' user.username %}">Αλλαγή του ηλεκτρονικού ταχυδρομείου</a></li>
+     		</ul>
+    	</div>
+    </div>
+    {% endif %}
+		 
+		{% endblock bookshelfactions %}

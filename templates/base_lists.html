@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block extrahead %}{% endblock extrahead %}
+
+{% block mainbody %}
+	<div id="lists-base-main">
+		<div class="row">
+			<div class="col-lg-8">
+				<div id="lists-base-main-content" class="app-content-panel">
+					{% block listcontent %}{% endblock listcontent %}
+				</div>
+			</div>
+  
+			<div class="col-lg-4">
+			{% block listactions %}
+				{% if user.is_authenticated %}
+				{% block morelists %}
+				{% if mylists %}
+				<div id="lists-base-userlists-sidebar" class="app-action-panel">
+					<div class="app-action-panel-title">οι λίστες μου</div>
+					<div class="app-action-panel-content">
+						<ul>
+							{% for list in mylists %}
+							<a href="{{ list.get_absolute_url }}"><li>{{ list.title }}</li></a>
+					        {% endfor %}
+						</ul>
+					</div>
+				</div>
+        {% endif %}
+				{% endblock morelists %}
+				<div id="lists-base-actions-sidebar" class="app-action-panel">
+					<div class="app-action-panel-title">ενέργειες</div>
+					<div class="app-action-panel-content">
+						<ul>
+							{% block listmoreactions %}
+							<a href="{% url "lists_create_list" %}"><li>δημιουργία νέας λίστας</li></a>
+							{% endblock listmoreactions %}
+		        		</ul>
+					</div>
+				</div>
+				{% endif %}
+			{% endblock listactions %}
+			</div>
+		</div>
+	</div>
+{% endblock mainbody %}
+
+{% block footer %}
+
+{% endblock %}

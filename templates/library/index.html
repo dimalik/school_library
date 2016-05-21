@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+{% load url from future %}
+
+{% block extrahead %}
+
+<script src="http://www.outsharked.com/scripts/jquery.imagemapster.js?v1.2.10" type="text/javascript" charset="utf-8"></script>
+<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/rhinoslider-1.05.css">
+
+<script type="text/javascript" src="{{ STATIC_URL }}js/easing.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/rhinoslider-1.05.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/mousewheel.js"></script>
+
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function() {
+    $('#slideshow').rhinoslider({
+  		controlsMousewheel: false,
+  		controlsKeyboard: false,
+  		controlsPlayPause: false,
+  		showBullets: 'never',
+  	});
+	$('.book-stars').each(function() {
+		$(this).raty({
+			starOn: '{{ STATIC_URL }}img/star-on.png',
+			starOff: '{{ STATIC_URL }}img/star-off.png',
+			score: $(this).attr('data-score'),
+			readOnly: true,
+			half: true
+		});
+	});
+	$('.container').find
+})
+
+</script>
+<script>
+$(function() {   
+    $("h2").wrapInner("<span>")
+    $("h2 br").before("<span class='spacer'>").after("<span class='spacer'>");
+ 	$('.container').find('img').each(function(){
+		var imgClass = (this.width/this.height > 1) ? 'wide' : 'tall';
+		$(this).addClass(imgClass);
+	})
+	$("#vivliothiki-image").mapster({
+		clickNavigate: true,
+		showToolTip: true,
+		fill: false,
+		stroke: true,
+		strokeColor: '000000',
+		strokeWidth: '3'
+	});
+})
+
+</script>
+<style type="text/css" media="screen">
+.one {
+    background: url("{{ STATIC_URL }}img/browse_2index.svg") no-repeat center;
+    background-size: 45% auto;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    background-color: #FF4E40;
+}
+
+.two {
+    background: url("{{ STATIC_URL }}img/search_index2.png") no-repeat center;
+    background-size: 50% auto;
+    background-color: #00FFB6;
+}
+
+.three {
+    background: url("{{ STATIC_URL }}img/lists2.png") no-repeat center;
+    background-size: 66% auto;
+    background-color: #CC1440;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+.rhino-container {
+  height: 300px !important;
+  background-color: #3D8199;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  -webkit-box-shadow: 0 8px 10px 0 rgba(0,0,0,0.7);
+  -moz-box-shadow: 0 8px 10px 0 rgba(0,0,0,0.7);
+  box-shadow: 0 1px 10px 0 rgba(0,0,0,0.7);
+  padding: 15px;
+  color: white;
+}
+.rhino-container li a {
+  color: inherit;
+
+}
+#slider li p {
+  line-height:24px;
+}
+</style>
+{% endblock %}
+
+
+{% block showcase %}
+<div id="library-index-showcase">
+        <div class="containers one"> <span class="showcase-title"><a href="{% url 'bookshelf_index_view' %}">Περιήγηση στη βιβλιοθήκη μας</a></span></div>
+        <div class="containers two"> <span class="showcase-title"><a href="{% url 'bookshelf_advanced_search_view' %}">Αναζήτηση στη βάση μας</a></span></div>
+        <div class="containers three"> <span class="showcase-title"><a href="{% url 'lists_suggested_lists' %}">Προτεινόμενες λίστες βιβλίων</a></span></div>
+</div>
+
+{% endblock showcase %}
+
+{% block mainbody %}
+<div id="library-index-panels">
+	<div class="library-index-panels-row">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="col-lg-8">
+					<!--{% include "index_includes/book_present.html" %}-->
+          <div id="slideshow">
+            {% for vivlio in book_present %}
+            <div class="slideshow-div-left">
+              <ul id="slider">
+                <li><h4><a href="{{ vivlio.get_absolute_url }}">{{ vivlio.title }}{% if vivlio.subtitle %}:<em> {{ vivlio.subtitle }}</em>{% endif %}</a></h4></li>
+                <li>{% if vivlio.editor.all|length > 0 %}<em>Επιμ.: {{ vivlio.get_editors }}{% else %}<em>{{ vivlio.get_book_authors }} </em>{% endif %}</em>{% if vivlio.publisher.name %}<br />Εκδόσεις: {{ vivlio.publisher.name }}{% endif %}</li>
+                <li>{{ vivlio.notes|safe|truncatewords:120 }}{% ifnotequal vivlio.notes vivlio.notes|truncatewords:120 %}
+<a href="{{ vivlio.get_absolute_url }}">Περισσότερα</a>
+{% endifnotequal %}</li>
+              </ul>
+            </div>
+            {% endfor %}
+          </div>
+				</div>
+				<div class="col-lg-4">
+					{% include "index_includes/book_suggest.html" %}  
+				</div>
+				</div>
+			</div>
+		</div>
+
+	<div class="library-index-panels-row">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="col-lg-4">
+					{% include "index_includes/assignments.html" %}
+				</div>
+
+				<div class="col-lg-4">
+					{% include "index_includes/topbooks.html" %}		
+				</div>
+
+				<div class="col-lg-4">
+					{% include "index_includes/lists.html" %}
+				</div>
+		  	</div>
+		</div>
+	</div>
+</div>
+{% endblock mainbody %}
+
+{% block footer %}
+<div id="library-index-footer">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="col-lg-4">
+					<div id="library-index-footer-hours" class="library-index-footer-panel">
+						<h5 class="library-index-footer-panel-title">ώρες λειτουργίας</h5>
+						<dl class="dl-horizontal">
+							<dt>Δευτέρα</dt><dd>8πμ-2μμ</dd>
+							<dt>Τρίτη</dt><dd>8πμ-2μμ</dd>
+							<dt>Τετάρτη</dt><dd>8πμ-2μμ</dd>
+							<dt>Πέμπτη</dt><dd>8πμ-2μμ</dd>
+							<dt>Παρασκευή</dt><dd>8πμ-2μμ</dd>
+						</dl>
+					</div>
+				</div>
+
+				<div class="col-lg-4">
+					<div id="library-index-footer-info" class="library-index-footer-panel">
+						<h5 class="library-index-footer-panel-title">όροι δανεισμού</h5>
+						<dl class="dl-horizontal">
+						  <dt>αριθμός βιβλίων</dt><dd>τρία ανά μαθητή</dd>
+						  <dt>χρόνος</dt><dd>τρεις εβδομάδες</dd>
+						</dl>
+					</div>
+				</div>
+
+				<div class="col-lg-4">
+					<div id="library-index-footer-where" class="library-index-footer-panel">
+						<h5 class="library-index-footer-panel-title">πού είμαστε</h5>
+						<ul class="library-index-footer-panel-where-are-we">
+              <li>1ο Πρότυπο Πειραματικό Γυμνάσιο Αθήνας</li>
+              <li>Αδριανού 114</li>
+              <li>105 58, Αθήνα</li>
+              <li>1gympeir@sch.gr</li>
+              <li>+30 210 3231788</li>
+              <li>+30 210 3223296</li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock footer %}
+

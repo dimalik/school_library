@@ -1,0 +1,69 @@
+{% block extrahead %}
+
+
+{% endblock %}
+
+<div class="navbar">
+  
+  <div class="container">
+  
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+  
+    <a class="navbar-brand" href="/">βιβλιοθήκη</a>
+    
+    <div class="nav-collapse collapse navbar-responsive-collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/">αρχική</a></li>
+        <li><a href="{% url "library_help_view" %}">βοήθεια</a></li>
+        <li><a href="{% url "library_contact_view" %}">επικοινωνία</a></li>
+        <li><a href="http://1gym-peir-athin.att.sch.gr/index.php/to-sxoleio/ypodomes/vivliothiki">η βιβλιοθήκη</a></li>
+
+      </ul><!-- /.nav navbar-nav-->
+      
+      <form class="navbar-form pull-left" action="{% url "bookshelf_search_view" %}" method="get">
+        <input type="text" class="form-control col-lg-8" name="query" placeholder="αναζήτηση">
+		<!--<button type="submit" class="btn btn-default">Submit</button>-->
+  
+      </form>
+      
+      <ul class="nav navbar-nav pull-right">
+        
+        <!-- plaino an den einai syndedemenos-->
+        
+        {% if not user.is_authenticated %}
+        
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Σύνδεση<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url "userena_signup" %}">Εγγραφή</a></li>
+            <li><a href="{% url "userena_signin" %}">Σύνδεση</a></li>
+          </ul>
+        </li>
+        
+        {% endif %}
+        
+        <!-- plaino an einai syndedemenos -->
+        
+        {% if user.is_authenticated %}
+        
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user.username }} <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url "userena_profile_edit" username=user.username %}">Ο Λογαριασμός μου</a></li>
+            <li><a href="{% url "userena_profile_detail" username=user.username %}">Το προφίλ μου</a></li>
+            <li class="divider"></li>
+            <li><a href="{% url "userena_signout" %}">Αποσύνδεση</a></li>
+          </ul>
+        </li>
+        
+        {% endif %}
+        
+      </ul><!-- /.nav navbar-nav pull-right-->
+      
+    </div><!-- /.nav-collapse -->
+  </div><!-- /.container -->
+</div><!-- /.navbar -->

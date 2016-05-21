@@ -1,0 +1,22 @@
+{% extends "alphabetically_author.html" %}
+
+{% block bookshelfcontent %}
+    <h4 class="detail-title">{{ syggrafeas.name }}</h4>
+	{% include "other_books.html" %}
+    
+    {% if syggrafeas.fotografia %}
+    <div class="thumbnail">
+			<img src="{{ MEDIA_URL}}{{ syggrafeas.fotografia }}" alt="{{ syggrafeas.name }}" title="{{ syggrafeas.name }}"/>
+    </div>
+    {% endif %}
+
+	{% endblock bookshelfcontent %}
+	
+	{% block bookshelfactions %}
+{{ block.super }}
+	{% endblock bookshelfactions %}
+
+
+
+
+

@@ -1,0 +1,64 @@
+{% extends "base_lists.html" %}
+
+
+{% block extrahead %}
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function() {
+  $(".media").click(function(){
+       window.location=$(".media-heading").find("a").attr("href"); 
+       return false;
+  });
+});
+
+
+</script>
+<style type="text/css" media="screen">
+.media:hover {
+  background-color:#CC1440;
+  cursor: pointer;
+}
+</style>
+{% endblock %}
+
+{% block listcontent %}
+
+<div class="app-content-panel-title">{{ title }}</div>
+
+
+<div class="app-content-panel-content">
+  <ul>
+	{% if listes|length > 0 %}
+    {% for lista in listes %}
+	<div id="lists-booklist-list-{{ lista.slug }}" class="media">
+	  <a class="pull-left" href="#">
+		{% if lista.image %}<img src="{{ MEDIA_URL}}{{ lista.image }}" alt="{{ lista.title }}" width="86" height="86" class="media-object"/>{% endif %}
+	  </a>
+	  <div class="media-body">
+	    <h4 class="media-heading"><a href="{{ lista.get_absolute_url }}">{{ lista.title }}</a></h4>
+		<p class="lists-booklist-list-list-subtitle"><em>Λίστα {{ lista.get_book_count }} {% if lista.get_book_count > 1 %}βιβλίων{% else %}βιβλίου{% endif %}. Δημιουργήθηκε από τον {{ lista.user }} στις {{ lista.created_at}}</em></p>
+		<p class="lists-booklist-list-list-description">{{ lista.description|safe }}</p>
+	  </div>
+	</div>
+	{% endfor %}
+	{% else %}
+	<div class="alert alert-warning"><p>Δεν υπάρχουν λίστες προς εμφάνιση</p></div>
+	{% endif %}
+  </ul>
+</div>
+
+{% endblock listcontent %}
+{% block listactions %}
+<div id="lists-base-filters-sidebar" class="app-action-panel">
+	<div class="app-action-panel-title">φίλτρα</div>
+	<div class="app-action-panel-content">
+		<ul>
+			<a href="{% url 'lists_recent_lists' %}"><li>τελευταίες λίστες</li></a>
+			<a href="{% url 'lists_all_lists' %}"><li>όλες οι λίστες</li></a>
+			<a href="{% url 'lists_user_lists' %}"><li>λίστες μαθητών</li></a>
+			<a href="{% url 'lists_suggested_lists' %}"><li>προτεινόμενες λίστες</li></a>
+		</ul>
+	</div>
+</div>
+
+{{ block.super }}
+{% endblock listactions %}

@@ -1,0 +1,123 @@
+{% extends 'userena/base_userena.html' %}
+{% load i18n %}
+{% load url from future %}
+
+{% block title %}{% blocktrans with profile.user.username as username %}{{ username }}'s profilen.{% endblocktrans %}{% endblock %}
+
+{% block userena_content %}
+<div class="row">
+  <div class="col-lg-12">
+    <table>
+      <tr>
+        <td>
+          <img class="thumbnail" src="{{ profile.get_mugshot_url }}" alt="{% trans "Your mugshot" %}" />
+        </td>
+        <td>
+          <table>
+            <tr>
+              <td valign="top"><h3>{{ profile.user.username }}</h3></td>
+            </tr>
+            <tr>
+              <td><p>Μέλος της βιβλιοθήκης από</p></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+
+    
+    {% if assignments %}
+    <div class="panel">
+      <div class="panel-heading"><h3 class="panel-title">Οι εργασίες μου</h3></div>
+      <table class="table table-striped no-border">
+        <thead>
+          <tr>
+            <th>Τίτλος Εργασίας</th><th>Τίτλος Βιβλίου</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for assignment in assignments %}
+<!-- na valw na allazei xrwma analoga me to an eiani ka8ysterimeno -->
+          <tr class="">
+            <td>{{ assignment.title }}</td><td>{{ assignment.book }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+    
+    
+    
+    
+    
+    {% if reservations %}
+    <div class="panel">
+      <div class="panel-heading"><h3 class="panel-title">Οι κρατήσεις μου</h3></div>
+      <table class="table table-striped no-border">
+        <thead>
+          <tr>
+            <th>Τίτλος βιβλίου</th><th>Εγίνε στις</th><th>Ισχύει μέχρι</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for reservation in reservations %}
+          <tr>
+            <td>{{ reservation.book }}</td><td>{{ reservation.created_at }}</td><td>{{ reservation.reserved_until }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+    {% if transactions %}
+    <div class="panel">
+      <div class="panel-heading"><h3 class="panel-title">Οι δανεισμοί μου</h3></div>
+      <table class="table table-striped no-border">
+        <thead>
+          <tr>
+            <th>Τίτλος βιβλίου</th><th>Εγίνε στις</th><th>Ισχύει μέχρι</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for transaction in transactions %}
+<!-- na valw na allazei xrwma analoga me to an eiani ka8ysterimeno -->
+          <tr class="">
+            <td><a href="{{ transaction.book.get_absolute_url }}">{{ transaction.book }}</a></td><td>{{ transaction.date_issued }}</td><td>{{ transaction.date_due }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+    {% if ratings %}
+    <div class="panel">
+      <div class="panel-heading"><h3 class="panel-title">Οι βαθμολογήσεις μου</h3></div>
+      <table class="table table-striped no-border table-hover">
+        <thead>
+          <tr>
+            <th>Τίτλος βιβλίου</th><th>βαθμολογία</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for rating in ratings %}
+          <tr>
+            <td><a href="{{ rating.content_object.get_absolute_url }}">{{ rating.content_object.title }}</a></td><td>{{ rating.score }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+  </div> 
+</div>
+{% endblock userena_content %}
+
+
+{% block userena_actions %}
+{{ block.super }}
+{% endblock userena_actions %}

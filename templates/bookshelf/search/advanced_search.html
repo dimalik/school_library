@@ -1,0 +1,17 @@
+{% extends "base_bookshelf.html" %}
+{% load bootstrap3 %}
+
+{% block extrahead %}
+
+{% endblock extrahead %}
+{% block bookshelfcontent %}
+<div id="advanced-search">
+<h4 style="line-height: 26px;border-bottom: 1px dotted black;">Προχωρημένη Αναζήτηση</h4></th>
+	<form action="" method="get" class="form">
+	    {% bootstrap_form form %}
+	    {% bootstrap_form_buttons %}
+		<button type="submit" class="btn btn-primary">Αναζήτηση</button>
+	    {% end_bootstrap_form_buttons %}
+	</form>
+</div>
+{% endblock %}

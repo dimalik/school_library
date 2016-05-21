@@ -1,0 +1,22 @@
+{% extends "category_list.html" %}
+
+{% block bookshelfcontent %}
+<div class="row" id="detail">
+  <div class="col-lg-8">
+    <h4 class="detail-title">{% if kathgoria.title %}{{ kathgoria.title }}{% else %}Κωδικός κατηγορίας: {{ kathgoria.code }}{% endif %}</h4>
+    <table class="table">
+      <tbody>
+				<tr>
+					{% if kathgoria.description %}
+					<td>Λοιπά στοιχεία:</td>
+					<td><p>{{ kathgoria.description }}</p></td>
+					{% endif %}
+				</tr>
+			</tbody>
+		</table>
+  </div>
+</div>
+
+{% include "other_books.html" %}
+
+{% endblock bookshelfcontent %}

@@ -1,0 +1,32 @@
+{% extends "base_lists.html" %}
+
+{% block listcontent %}
+<div class="app-content-panel-title">{{ lista.title }}</div>
+<div class="app-content-panel-content">
+    <p class="lists-booklist-list-list-subtitle">Λίστα {{ lista.get_book_count }} {% if lista.get_book_count > 1 %}βιβλίων{% else %}βιβλίου{% endif %}. Δημιουργήθηκε από τον {{ lista.user }} στις {{ lista.created_at}}</p>
+	<p>{{ lista.description|safe }}</p>
+	
+	{% for book in lista.books.all %}
+	<div id="lists-booklist-list-{{ lista.slug }}" class="media">
+	  <a class="pull-left" href="#">
+		{% if book.foto %}<img src="{{ MEDIA_URL}}{{ book.foto }}" alt="{{ book.foto }}" width="86" height="86" class="media-object"/>{% endif %}
+	  </a>
+	  <div class="media-body">
+	    <h4 class="media-heading"><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></h4>
+		<p class="lists-booklist-list-list-subtitle"><em>{{ book.get_book_authors }}</em></p>
+	  </div>
+	</div>
+	{% endfor %}
+	
+</div>
+{% endblock listcontent %}
+
+{% block listmoreactions %}
+{{ block.super }}
+<a href="{% url "lists_all_lists" %}"><li>προβολή όλων των λιστών</li></a>
+{% if user.username == lista.user.username %}
+<a href="{% url "lists_edit_list" slug=lista.slug %}"><li>επεξεργασία της λίστας</li></a>
+<a href="{% url "lists_delete_list" slug=lista.slug %}"><li>διαγραφή της λίστας</li></a>
+{% endif %}
+{% endblock listmoreactions %}
+

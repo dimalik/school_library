@@ -1,0 +1,3 @@
+{{ object.title }}
+{% for syggrafeas in object.author.all %}{{ syggrafeas.name }}{% endfor %}
+{{ object.publisher }}

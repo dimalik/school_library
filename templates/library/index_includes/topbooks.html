@@ -1,0 +1,12 @@
+<div id="library-index-books-panel" class="library-index-panel">
+	<h4 class="library-index-panel-title"><a href="{% url "bookshelf_index_view" %}">βιβλία</a></h4>
+	<div class="library-index-panel-content">
+		<ul>
+			{% for book in books %}
+	          <li><div><a href="{{ book.get_absolute_url }}"><span>{{ book.title|truncatechars:35 }}</span></a><div class="pull-right book-stars" data-score={{ book.rating.get_rating|stringformat:'f' }}></div></div></li>
+	        {% endfor %}
+		</ul>
+	</div>	
+</div>
+
+

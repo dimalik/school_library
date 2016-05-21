@@ -1,0 +1,44 @@
+{% extends "base_bookshelf.html" %}
+
+{% block extrahead %}
+<style type="text/css" media="screen">
+  .decades {
+    margin: 0;
+  }
+  .decades li {
+    display: inline-block;
+    font-size:16px;
+    width: 45px;
+  }
+  .decades li a {
+    text-decoration: none;
+    width: 45px;
+    display: block;
+  }
+  .lang {
+    text-align: center;
+  }
+</style>
+{% block extrahead_2 %}{% endblock %}
+{% endblock %}
+
+{% block bookshelfcontent %}
+
+
+{% endblock bookshelfcontent %}
+
+{% block bookshelfactions %}
+<div id="bookshelf-base-browse-sidebar" class="app-action-panel">
+	<div class="app-action-panel-title">Επιλέξτε δεκαετία</div>
+	<div class="app-action-panel-content">
+    <ul class="decades">
+      {% for decade in decades %}
+        <li><a href="{% url 'bookshelf_year_view_year' decade %}">{{ decade }}</a></li>
+      {% endfor %}
+    </ul>
+	</div>
+</div>
+
+
+
+{% endblock bookshelfactions %}

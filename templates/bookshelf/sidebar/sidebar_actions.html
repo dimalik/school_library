@@ -1,0 +1,33 @@
+  {% block bookshelfactions %}
+  <div id="bookshelf-base-browse-sidebar" class="app-action-panel">
+  	<div class="app-action-panel-title">περιήγηση με βάση</div>
+  	<div class="app-action-panel-content">
+  		<ul>
+      	<li><a href="#" id="reserve" onclick="return false;">κράτηση</a></li>
+      	<li><a href="#">εκτύπωση εγγραφής</a></li>
+    		<form>{% csrf_token %}
+    			<div id="lists" class="collapsible">προσθήκη σε λίστα<span></span></div>
+    			<div class="collapsible-container">
+    				<div class="collapsible-content">
+            <!--<div class="btn-group">
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                Προσθήκη σε λίστα <span class="caret"></span>
+              </button>-->
+              <ul>
+                {% if user_booklists|length > 0 %}
+                {% for booklist in user_booklists %}
+                <li><a href="#" data-list-id="{{ booklist.id }}" class="list-add" onclick="return false;">{{ booklist.title }}</a></li>
+                {% endfor %}
+                <li class="divider"></li>
+                {% endif %}
+                <li><a href="{% url "lists_create_list" %}">Δημιουργία λίστας</a></li>
+              </ul>
+            </div>
+          </form>
+  		</ul>
+  	</div>
+  </div>
+
+
+
+  {% endblock bookshelfactions %}

@@ -1,0 +1,34 @@
+{% extends "base_help.html" %}
+
+
+
+{% block helpcontent %}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="app-content-panel-title">βοήθεια: λίστες</div>	
+		<div class="app-content-panel-content">
+			lists
+		</div>
+	</div>
+</div>
+
+{% endblock helpcontent %}
+
+{% block helpactions %}
+<div id="bookshelf-base-browse-sidebar" class="app-action-panel">
+	<div class="app-action-panel-title">θέματα</div>
+	<div class="app-action-panel-content">
+		<ul>
+			<li><a href="{% url "library_help_search_view" %}">Αναζήτηση βιβλίου</a></li>
+      <li><a href="{% url "library_help_browse_view" %}">Περιήγηση στη βιβλιοθήκη</a></li>
+      <li><a href="{% url "library_help_lists_view" %}">Λίστες</a></li>
+			<li><a href="{% url "library_help_reservations_view" %}">Κρατήσεις</a></li>
+		</ul>
+	</div>
+</div>
+
+
+
+{% endblock helpactions %}
+
+{% block footer %}{% endblock footer %}

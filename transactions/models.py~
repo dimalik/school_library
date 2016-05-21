@@ -1,0 +1,46 @@
+# -*- coding: utf-8 -*-
+
+from django.db import models
+from django.conf import settings
+from bookshelf.models import Item
+from django.template import defaultfilters
+from django.core.exceptions import ValidationError
+
+import datetime
+
+class Transaction(models.Model):
+
+    usr = models.ForeignKey(settings.AUTH_USER_MODEL,verbose_name="Χρήστης")
+    book = models.ForeignKey(Item,verbose_name="Βιβλίο")
+    date_issued = models.DateField(verbose_name="Ημερομηνία δανεισμού",auto_now_add=True,
+                                   null=True)
+    due = models.DateField(verbose_name="Ημερομηνία επιστροφής",default=datetime.date.today() +
+                         datetime.timedelta(days=30))
+    date_returned = models.DateField(verbose_name="Ημερομηνία που επεστράφη",auto_now=False,
+            auto_now_add=False, blank=True,null=True)
+    copy = models.PositiveIntegerField(verbose_name="Αριθμός δανειζόμενου αντιτύπου")
+
+    def return_book(self):
+    	    if self.book.status == False:
+    	    	    self.book.status = True
+    	    self.book.num_available_copies += 1
+    	    self.book.save()
+    	    
+    def clean(self):
+    	    if self.book.status == False:
+    	    	    raise ValidationError(u'Αυτό το βιβλίο δεν είναι διαθέσιμο')
+            if self.copy > self.book.num_copies:
+                raise ValidationError(u'Ο αριθμός αντιτύπου δεν είναι δυνατό να είναι μεγαλύτερος από τον αριθμό των αντιτύπων')
+    	    	    
+    def save(self):
+    	    if self.book.status == True:
+    	    	    if self.book.num_available_copies >= 1:
+    	    	    	    self.book.num_available_copies -= 1
+    	    	    	    if self.book.num_available_copies == 0:
+    	    	    	    	    self.book.status = False
+    	    	    else:
+    	    	    	    self.book.status = False
+    	    	    self.book.save()
+
+    	    super(Transaction, self).save()
+

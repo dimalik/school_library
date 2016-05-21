@@ -1,0 +1,167 @@
+{% extends "base_bookshelf.html" %}
+{% load widget_tweaks facet_tags %}
+{% block extrahead %}
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+    $('.active-facet-name').each(function() {
+      if ($(this).text() == 'Category ') {
+        $(this).text('Κατηγορία ')
+      }
+      else if ($(this).text() == 'Publisher ') {
+        $(this).text('Εκδότης ')
+      }
+      else if ($(this).text() == 'Status ') {
+        $(this).text('Διαθεσιμότητα ')
+      }
+      else if ($(this).text() == 'Location ') {
+        $(this).text('Τοποθεσία ')
+      }
+    });
+    $('.active-facet-value').each(function() {
+      if ($(this).text() == 'true') {
+        $(this).text('Υπάρχει')
+      }
+      else if ($(this).text() == 'false') {
+        $(this).text('Δεν υπάρχει')
+      }
+    });
+  });
+  
+</script>
+<style type="text/css" media="screen">
+.pagination-part {
+  text-align: center;
+}
+.pagination-part ul {
+  display: inline-block;
+}
+
+.pagination a {
+  color: black;
+}
+.nav-header {
+  background-color: #CC1440;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+#reset-filters {
+  padding-left: 20px;
+}
+.fa {
+  font-family: FontAwesome !important;
+}
+#reset-filters .facet_removal:hover {
+  text-decoration: underline;  
+}
+</style>
+{% endblock extrahead %}
+{% block bookshelfcontent %}
+
+<div class="results-found">
+    <p class="muted">{% if page.paginator.count > 1 %}Βρέθηκαν {{ page.paginator.count }} αποτελέσματα {% elif page.paginator.count == 1 %}Βρέθηκε {{ page.paginator.count }} αποτέλεσμα{% else %}Δεν βρέθηκε κανένα βιβλίο με τα στοιχεία που δώσατε{% endif %}</p>
+</div>
+{% if page.paginator.count != 0 %}
+<div id="alla-vivlia" class="row">
+  <div class="col-lg-12">
+    <table class="table table-hover">
+			<thead>
+				<tr>
+	  			<th class="book-code-head">Βιβλιάριθμος</th>
+					<th class="book-title-head">Τίτλος βιβλίου</th>
+					<th class="book-author-head">Συγγραφέας</th>
+					<th class="book-publisher-head">Εκδότης</th>
+					<th class="book-year-head">Έτος</th>
+					<th class="book-category-head">Κατηγορία</th>
+					<th class="book-status-head">Διαθεσιμότητα</th>
+				</tr>
+      </thead>
+      <tbody>
+				{% for vivlio in page.object_list %}
+				<tr>
+					<td class="book-code">{{ vivlio|get_value:"bib_code" }}</td>
+					<td class="book-title"><a href="{{ vivlio|get_method:"get_absolute_url" }}">{{ vivlio.title }}</a></td>
+					<td class="book-author"><ul class="authors-list"  style="list-style: none; margin:0px; padding:0px;line-height:20px">{% for syggrafeas in vivlio|get_authors %}<li><a href="{{ syggrafeas.get_absolute_url }}"> {{ syggrafeas.name }} </a></li>{% endfor %}</ul></td>
+					<td class="book-publisher">{% if vivlio.publisher %}<a href="{{ vivlio|get_publisher_url }}"> {{ vivlio|get_publisher_name }} </a>{% endif %}</td>
+					<td class="book-year">{% if vivlio.year %}{{ vivlio.year }}{% endif %}</td>
+					<td class="book-category"><a href="{{ vivlio|get_category_url }}">{{ vivlio|get_category_name }}</a></td>
+					<td class="book-status">{% if vivlio.status %}Διαθέσιμο{% else %}Μη διαθέσιμο{% endif %}</td>		
+				</tr>
+				{% endfor %}
+			</tbody>
+    </table>
+  </div>
+</div>
+
+
+{% if paginator.num_pages > 1 %}
+<div class="pagination-part">
+<ul class="pagination">
+  {% if page.has_previous %}
+        <li><a href="?{% faceted_next_prev_querystring request page.previous_page_number %}">&laquo;</a></li>
+  {% else %}
+  <li class="disabled"><a href="#">&laquo;</a></li>
+  {% endif %}
+  {% for num in numpages %}
+  {% if num == page.number %}
+  <li class="active"><a href="#">{{ num }}</a></li>
+  {% else %}
+  <li><a href="?{% faceted_next_prev_querystring request num %}">{{ num }}</a></li>
+  {% endif %}
+  
+  {% endfor %}
+  {% if page.has_next %}
+      <li><a href="?{% faceted_next_prev_querystring request page.next_page_number %}">&raquo;</a></li>
+  {% else %}
+  <li class="disabled"><a href="#">&raquo;</a></li>
+  {% endif %}
+</ul>
+</div>
+{% endif %}
+{% endif %}
+
+{% endblock %}
+
+{% block bookshelfactions %}
+{% if facets %}
+<div id="bookshelf-base-browse-sidebar" class="app-action-panel">
+	<div class="app-action-panel-title">Επιλογή φίλτρων</div>
+	<div class="app-action-panel-content">
+        <div id="reset-filters">
+            <br>
+            {% if filters %}
+            <strong>Ενεργά φίλτρα: (κλικ για διαγραφή)</strong><br>
+            {% for facet, value in filters %}
+                <a class="facet_removal" href="?{% remove_facet request value %}"><i class="fa fa-ban"></i> <span class="active-facet-name">{{ facet }}</span>: <span class="active-facet-value">{{ value }}</a></span><br />
+            {% endfor %}
+            <br>
+            <a href="{{ request.path }}{% if query %}?q={{ query }}{% endif %}">Διαγραφή φίλτρων</a>
+            {% endif %}
+        </div>
+        <ul>
+        {% for field, facets in facets.fields.items %}
+            {% if facets %}
+                {% if field == 'category' %}
+                <div class="nav-header">Ανα κατηγορία</div>
+                {% elif field == 'publisher' %}
+                <div class="nav-header">Ανά εκδότη</div>
+                {% elif field == 'status' %}
+                <div class="nav-header">Διαθεσιμότητα</div>
+                {% elif field == 'location' %}
+                <div class="nav-header">Ανά τοποθεσία</div>
+                {% endif %}
+                {% for facet in facets %}
+                    {% if facet.1 %}
+                        {% with path=request.get_full_path %}
+                            <li><a href="{{ request.get_full_path }}{% if '?q=' not in path %}?q={% endif %}&amp;selected_facets={{ field }}_exact:{{ facet.0|urlencode }}">{{ facet.0|title }} ({{ facet.1 }})</a></li>
+                        {% endwith %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+        </ul>
+    </div>
+	</div>
+{% endif %}
+       
+{% endblock bookshelfactions %}

@@ -1,0 +1,23 @@
+{% extends "base_bookshelf.html" %}
+
+{% block bookshelfcontent %}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <td>'Ονομα εκδοτικού οίκου</td>
+      <td>Διεύθυνση</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for ekdotis in ekdotes %}
+    <tr>
+      <td><a href="{{ ekdotis.get_absolute_url }}">{{ ekdotis.name }}</a></td>
+      <td>{{ ekdotis.address }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% include "includes/pagination.html" %}
+
+{% endblock bookshelfcontent %}

@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-lg-8">
+    <table class="table">
+      <caption>Διαθεσιμότητα βιβλίου</caption>
+      <thead>
+	<tr>
+	  <th>Ταξιθετικός αριθμός</th>
+	  <th>Διαθεσιμότητα</th>
+	  <th>Αριθμός διαθέσιμων αντιτύπων</th>
+	</tr>
+      </thead>
+      <tbody>
+	<tr>
+	  <td>{{ vivlio.bib_code }}</td>
+	  <td><strong>{% if vivlio.status %}<p class="text-success">Διαθέσιμο</p>{% else %}<p class="text-error">Μη Διαθέσιμο</p>{% endif %}</strong></td>
+	  <td>{{ vivlio.num_available_copies }}</td>			
+	</tr>
+      </tbody>
+    </table>
+  </div>
+</div>

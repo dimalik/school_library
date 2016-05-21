@@ -1,0 +1,25 @@
+{% extends "base_bookshelf.html" %}
+
+{% block bookshelfcontent %}
+<div class="row" id="detail">
+  <div class="col-lg-8">
+    <h4 class="detail-title">{{ ekdoths.name }}</h4>
+    <table class="table">
+      <tbody>
+	<tr>
+	  {% if ekdoths.address %}<td>Διεύθυνση:</td><td>{{ ekdoths.address }}</td>{% endif %}
+	</tr>
+	<tr>
+	  {% if ekdoths.description %}<td>Λοιπά στοιχεία:</td><td><p style="text-align: justify;">{{ ekdoths.description }}</p></td>{% endif %}
+	</tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-lg-4">
+    {% if ekdoths.fotografia %}<div class="thumbnail"><img src="{{ MEDIA_URL}}{{ ekdoths.fotografia }}" alt="{{ ekdoths.name }}" title="{{ ekdoths.name }}"/></div>{% endif %}
+  </div>
+</div>
+
+{% include "other_books.html" %}
+
+{% endblock bookshelfcontent %}

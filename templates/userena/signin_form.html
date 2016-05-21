@@ -1,0 +1,20 @@
+{% extends 'userena/base_userena.html' %}
+{% load i18n %}
+{% load url from future %}
+{% load bootstrap3 %}
+
+{% block title %}{% trans "Signin" %}{% endblock %}
+
+{% block bookshelfcontent %}
+<div id='login-form'>
+	<form action="" method="post" class="form">
+    {% csrf_token %}
+	    {% bootstrap_form form %}
+	    {% bootstrap_form_buttons %}
+		<button type="submit" class="btn btn-primary">Σύνδεση</button>
+	    {% end_bootstrap_form_buttons %}
+	</form>
+  <p class="forgot-password"><a href="{% url 'userena_password_reset' %}" title="{% trans 'Forgot your password?' %}">Ξεχάσατε τον κωδικό πρόσβασής σας;</a></p>
+  {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
+</div>
+{% endblock %}

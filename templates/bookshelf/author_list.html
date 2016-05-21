@@ -1,0 +1,24 @@
+{% extends "base_bookshelf.html" %}
+
+{% block bookshelfcontent %}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <td>Όνομα συγγραφέα</td>
+      <td>Άλλα ονόματα με τα οποία είναι γνωστός</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for syggrafeas in syggrafeis %}
+    <tr>
+      <td><a href="{{ syggrafeas.get_absolute_url }}">{{ syggrafeas.name }}</a></td>
+      <td>{% for allo_onoma in syggrafeas.other_names.all %}{{ allo_onoma }}{% endfor %}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% include "includes/pagination.html" %}
+
+{% endblock bookshelfcontent %}
+

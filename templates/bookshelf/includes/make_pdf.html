@@ -1,0 +1,42 @@
+<!DOCTYPE>
+<html lang="el">
+<head>
+  <meta charset="utf-8">
+  <title>{{ item.name }}</title>
+  <style type="text/css">
+    @font-face {
+    font-family: Deja; 
+    src: url("/Users/dimitriosalikaniotis/developer/library2/library/bookshelf/static/fonts/DejaVu_Sans/DejaVuSans.ttf");
+    }
+    div {
+    font-family: Deja;
+    }
+  </style>
+</head>
+<body>
+  <div class="row" style="margin-top: 10px;">
+    <div class="span8">
+      <h1>{{ obj.title }} {% if obj.subtitle %} : {{ obj.subtitle }}{% endif %}</h1>
+      <table class="table table-hover">
+	<tbody>
+	  <tr>
+	    <td style="width:20%;">{% if obj.author.all|length > 1 %}Συγγραφείς:{% else %}Συγγραφέας:{% endif %}</td><td>{{ obj.get_book_authors }}</td>
+	  </tr>
+	  <tr>
+	    <td>Έκδοση:</td><td>{% if obj.publisher.address %}{{ obj.publisher.address }}: {% endif %}{{ obj.publisher }}, {{ obj.year }}</td>
+	  </tr>
+	  <tr>
+	    <td>Κατηγορία:</td><td>{{ obj.category }}</td>
+	  </tr>
+	  <tr>
+	    <td>Γλώσσα:</td><td>{{ obj.get_language_display }}</td>
+	  </tr>
+	</tbody>			
+      </table>
+    </div>
+    <div class="span4">
+      {% if obj.foto %}<div class="thumbnail"><img src="{{ MEDIA_URL}}{{ obj.foto }}" /></div>{% endif %}
+    </div>
+  </div>
+</body>
+</html>

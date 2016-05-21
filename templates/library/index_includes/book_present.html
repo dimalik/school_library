@@ -1,0 +1,11 @@
+<div id="library-index-book-presentation-panel" class="library-index-panel">
+	<h4 class="library-index-panel-title">βιβλιοπαρουσιάσεις</h4>
+	<div class="library-index-panel-content">
+	{% if book_present.foto %}
+         <img src="{{ MEDIA_URL }}{{ book_present.foto }}" class="img-thumbnail" style="float: left; margin-left: 20px;margin-right: 20px;margin-bottom: 20px;"/></td>
+       {% endif %}
+	<h4><a href="{{ book_present.get_absolute_url }}">{{ book_present.title }}</a></h4>
+	<em>{% if book_present.editor.all|length > 0 %}{{ book_present.get_editors }} (Επιμ.){% else %}{{ book_present.get_book_authors }}{% endif %}</em>{% if book_present.publisher %}, {{ book_present.publisher }}{% endif %}{% if book_present.year %}, {{ book_present.year }}{% endif %}
+	<p style="text-align: justify;">{{ book_present.notes|safe|truncatewords_html:120 }}{% if book_present.notes %}<a href="{{ book_present.get_absolute_url }}">Περισσότερα</a>{% endif %}</p>
+	</div>
+</div>

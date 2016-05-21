@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block extrahead %}{% endblock extrahead %}
+
+{% block mainbody %}
+<div id="bookshelf-base-main">
+	<div class="row">
+		<div class="col-lg-8">
+			<div id="bookshelf-base-main-content" class="app-content-panel">
+				{% block bookshelfcontent %}
+
+				{% endblock bookshelfcontent %}
+			</div>
+		</div>
+
+		<div class="col-lg-4">
+				{% block bookshelfactions %}
+				{% endblock bookshelfactions %}
+		</div>
+	</div>
+</div>
+{% endblock mainbody %}

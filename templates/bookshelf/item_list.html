@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+
+
+<!-- DataTables -->
+<script type="text/javascript" charset="utf-8" src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="{{ STATIC_URL }}js/DT_bootstrap.js"></script>
+<script type="text/javascript" charset="utf-8">
+
+$(document).ready(function() {
+  $('#datatable').dataTable( {
+          "bLengthChange"     : true,
+          "oLanguage"         : {
+               "sZeroRecords" : "Δεν υπάρχουν αποτελέσματα με τους όρους που δώσατε",
+               "sLengthMenu"  : "Δείξε _MENU_ αποτελέσματα",
+               "sInfoFiltered": " - από _MAX_ συνολικά αποτελέσματα",
+               "sInfo"        : "Βρέθηκαν _TOTAL_ εγγραφές (από _START_ έως _END_)",
+               "sSearch"      : ""
+               
+             },
+          "asStripeClasses"   : []
+             
+          
+      } );
+      
+  } );
+</script>
+<script type="text/javascript" charset="utf-8">
+$(function(){
+    $('#datatable').each(function(){
+        var datatable = $(this);
+        // SEARCH - Add the placeholder for Search and Turn this into in-line formcontrol
+        var search_input = datatable.closest('.dataTables_wrapper').find('div[id$=_filter] input');
+        search_input.attr('placeholder', 'αναζήτηση')
+        search_input.addClass('form-control input-small')
+        search_input.css('width', '250px')
+ 
+        // SEARCH CLEAR - Use an Icon
+        var clear_input = datatable.closest('.dataTables_wrapper').find('div[id$=_filter] a');
+        clear_input.html('<i class="icon-remove-circle icon-large"></i>')
+        clear_input.css('margin-left', '5px')
+ 
+        // LENGTH - Inline-Form control
+        var length_sel = datatable.closest('.dataTables_wrapper').find('div[id$=_length] select');
+        length_sel.addClass('form-control input-small')
+        length_sel.css('width', '75px')
+ 
+        // LENGTH - Info adjust location
+        var length_sel = datatable.closest('.dataTables_wrapper').find('div[id$=_info]');
+        length_sel.css('margin-top', '18px')
+    });
+});
+</script>
+{% endblock %}
+
+
+{% block content %}
+<table class="table table-hover" id="datatable">
+  <thead>
+    <tr>
+      <th>Βιβλιάριθμος</th>
+      <th>Τίτλος βιβλίου</th>
+      <th>Συγγραφέας</th>
+      <th>Εκδότης</th>
+      <th>Έτος</th>
+      <th>Κατηγορία</th>
+      <th>Διαθεσιμότητα</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for vivlio in vivlia %}
+    <tr>
+      <td>{{ vivlio.bib_code }}</td>
+      <td><a href="{{ vivlio.get_absolute_url }}">{{ vivlio.title }}</a></td>
+      <td><ul style="list-style: none;">{% for syggrafeas in vivlio.author.all %}<li><a href="{{ syggrafeas.get_absolute_url }}"> {{ syggrafeas.name }} </a></li>{% endfor %}</ul></td>
+      <td>{% if vivlio.publisher %}<a href="{{ vivlio.publisher.get_absolute_url }}"> {{ vivlio.publisher.name }} </a>{% endif %}</td>
+      <td>{% if vivlio.year %}{{ vivlio.year }}{% endif %}</td>
+      <td><a href="{{ vivlio.category.get_absolute_url }}">{{ vivlio.category }}</a></td>
+      <td>{% if vivlio.status %}Διαθέσιμο{% else %}Μη διαθέσιμο{% endif %}</td>		
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% include "includes/pagination.html" %}
+{% endblock %}

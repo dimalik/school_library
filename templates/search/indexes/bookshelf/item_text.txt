@@ -1,0 +1,10 @@
+{{ object.title }}
+{{ object.author }}
+{{ object.publisher }}
+{{ object.category }}
+{{ object.language }}
+{{ object.year }}
+{{ object.bibcode }}
+{{ object.crcode }}
+{{ object.subtitle }}
+{{ object.series }}

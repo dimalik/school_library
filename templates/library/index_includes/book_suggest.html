@@ -1,0 +1,10 @@
+<div id="library-index-suggestions-panel" class="library-index-panel">
+	<h4 class="library-index-panel-title">προτάσεις</h4>
+	<div class="library-index-panel-content">
+		<ul>
+			  {% for suggestion in in_suggestions %}
+	              <li><a href="{{ suggestion.get_absolute_url }}">{{ suggestion.title|truncatewords_html:6 }}</a></li>
+	            {% endfor %}
+		</ul>
+	</div>
+</div>

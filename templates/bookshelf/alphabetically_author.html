@@ -1,0 +1,82 @@
+{% extends "base_bookshelf.html" %}
+
+{% block extrahead %}
+<style type="text/css" media="screen">
+  .lang {
+    text-align: center;
+  }
+</style>
+{% block extrahead_2 %}{% endblock %}
+{% endblock %}
+
+{% block bookshelfcontent %}
+
+
+{% endblock bookshelfcontent %}
+
+{% block bookshelfactions %}
+<div id="bookshelf-base-browse-sidebar" class="app-action-panel">
+	<div class="app-action-panel-title">Επιλέξτε αρχικό γράμμα ονόματος συγγραφέα</div>
+	<div class="app-action-panel-content">
+    <div class="lang">Έλληνες συγγραφείς</div>
+    <ul class="letters">
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'Α' %}">α</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'Β' %}">β</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'Γ' %}">γ</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'Δ' %}">δ</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'Ε' %}">ε</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'Ζ' %}">ζ</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'Η' %}">η</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'Θ' %}">θ</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'Ι' %}">ι</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'Κ' %}">κ</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'Λ' %}">λ</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'Μ' %}">μ</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'Ν' %}">ν</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'Ξ' %}">ξ</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'Ο' %}">ο</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'Π' %}">π</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'Ρ' %}">ρ</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'Σ' %}">σ</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'Τ' %}">τ</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'Υ' %}">υ</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'Φ' %}">φ</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'Χ' %}">χ</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'Ψ' %}">ψ</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'Ω' %}">ω</a></li>
+    </ul>
+    <div class="lang">Ξένοι συγγραφείς</div>
+    <ul class="letters">
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'A' %}">a</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'B' %}">b</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'C' %}">c</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'D' %}">d</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'E' %}">e</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'F' %}">f</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'G' %}">g</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'H' %}">h</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'I' %}">i</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'J' %}">j</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'K' %}">k</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'L' %}">l</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'M' %}">m</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'N' %}">n</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'O' %}">o</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'P' %}">p</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'Q' %}">q</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'R' %}">r</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'S' %}">s</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'T' %}">t</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'U' %}">u</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'V' %}">v</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'W' %}">w</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'X' %}">x</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'Y' %}">y</a></li>
+      <li><a href="{% url 'bookshelf_alphabetically_letter_author_view' 'Z' %}">z</a></li>
+    </ul>
+	</div>
+</div>
+
+
+
+{% endblock bookshelfactions %}

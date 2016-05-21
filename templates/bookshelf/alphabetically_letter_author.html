@@ -1,0 +1,75 @@
+{% extends "alphabetically_author.html" %}
+{% block extrahead_2 %}
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function() {
+  $('tr').click( function() {
+      window.location = $(this).find('a').attr('href');
+  }).hover( function() {
+      $(this).toggleClass('hover');
+  });
+});
+
+
+</script>
+<style type="text/css" media="screen">
+.pagination-part {
+  text-align: center;
+}
+.pagination-part ul {
+  display: inline-block;
+}
+
+.pagination a {
+  color: black;
+}
+tr.hover {
+   cursor: pointer;
+   /* whatever other hover styles you want */
+}
+</style>
+{% endblock %}
+{% block bookshelfcontent %}
+{% if items %}
+<div>
+<table class="table table-hover">
+    {% for author in items %}
+    <tr>
+      <td>
+					<h5><a href="{{ author.get_absolute_url }}">{{ author }}</a><br /><span><br /><em>Αριθμός βιβλίων στη βάση μας: {{ author.numBooks }}</em></h5>
+      </td>
+      {% if author.fotografia %}<td><img src="{{ MEDIA_URL }}{{ author.fotografia }}" class="img-thumbnail" style=""/></td>{% endif %}
+		</tr>
+    {% endfor %}
+</table>
+</div>
+
+
+{% if items.paginator.num_pages > 1 %}
+<div class="pagination-part">
+<ul class="pagination">
+  {% if items.has_previous %}
+        <li><a href="?page={{ items.previous_page_number }}">&laquo;</a></li>
+  {% else %}
+  <li class="disabled"><a href="#">&laquo;</a></li>
+  {% endif %}
+  {% for num in numpages %}
+  {% if num == items.number %}
+  <li class="active"><a href="#">{{ num }}</a></li>
+  {% else %}
+  <li><a href="?page={{ num }}">{{ num }}</a></li>
+  {% endif %}
+  
+  {% endfor %}
+  {% if items.has_next %}
+      <li><a href="?page={{ items.next_page_number }}">&raquo;</a></li>
+  {% else %}
+  <li class="disabled"><a href="#">&raquo;</a></li>
+  {% endif %}
+</ul>
+</div>
+{% endif %}
+{% else %}
+<p>Δεν βρέθηκαν βιβλία που να ξεκινούν με το συγκεκριμένο γράμμα. Αν θέλετε να αναζητήσετε κάτι συγκεκριμένο <a href="{% url 'bookshelf_search_view' %}">πιέστε εδώ.</a><p>
+{% endif %}
+{% endblock %}
+

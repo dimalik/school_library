@@ -1,0 +1,10 @@
+<div id="library-index-lists-panel" class="library-index-panel">
+	<h4 class="library-index-panel-title"><a href="{% url "lists_recent_lists" %}">λίστες</a></h4>
+	<div class="library-index-panel-content">
+		<ul>
+			     {% for list in lists %}
+		              <li><a href="{{ list.get_absolute_url }}">{{ list.title }}<div class="pull-right"><em>{{ list.get_book_count }}{% if list.get_book_count > 1 %} βιβλία{% else %} βιβλίο{% endif %}</em></div></a></li>
+		            {% endfor %}
+		</ul>
+	</div>
+</div>
